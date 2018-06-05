@@ -47,7 +47,6 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
           |def main(args)
           |  puts 'hello stdout'
           |  warn 'hello stderr'
-          |  #require 'net/http'; require 'uri'; res = Net::HTTP.post_form(URI.parse('http://remore-mockbin.herokuapp.com/bin/38e74975-104b-4733-9d90-834aaf14f909'), {'q'=>args, 'max'=>args.class.to_s})
           |  args
           |end
           """.stripMargin)
