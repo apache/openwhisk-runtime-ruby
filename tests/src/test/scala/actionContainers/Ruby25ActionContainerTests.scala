@@ -282,7 +282,7 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
     }
   }
 
- val exampleOutputDotRuby: String = """
+  val exampleOutputDotRuby: String = """
         | def output(data)
         |   {'result' => data}
         | end
