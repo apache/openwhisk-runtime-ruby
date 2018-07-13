@@ -1,4 +1,5 @@
 # Apache OpenWhisk runtimes for Ruby
+[![Build Status](https://travis-ci.org/remore/openwhisk-runtime-ruby.svg?branch=master)](https://travis-ci.org/remore/openwhisk-runtime-ruby)
 
 ### Give it a try today
 To use as a docker action
