@@ -8,6 +8,7 @@ class InitApp
   def call(env)
     # Make sure that this action is not initialised more than once
     if File.exist? CONFIG then
+      puts "Error: Cannot initialize the action more than once."
       return ErrorResponse.new 'Cannot initialize the action more than once.', 403
     end
 
