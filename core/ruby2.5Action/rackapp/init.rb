@@ -5,10 +5,21 @@ require "#{__dir__}/filepath.rb"
 class InitApp
   include Filepath
 
-  def call(env) 
+  def call(env)
+    # Make sure that this action is not initialised more than once
+    if File.exist? CONFIG then
+      return ErrorResponse.new 'Cannot initialize the action more than once.', 403
+    end
+
     # Expect JSON data input
     body = Rack::Request.new(env).body.read
     data = JSON.parse(body)['value'] || {}
+
+    # Is the input data empty?
+    if data == {} then
+      return ErrorResponse.new 'Missing main/no code to execute.', 500
+    end
+
     name = data['name'] || ''           # action name
     main = data['main'] || ''           # function to call
     code = data['code'] || ''           # source code to run

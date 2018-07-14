@@ -145,19 +145,6 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
     })
   }
 
-  it should "fail to initialize with no code" in {
-    val (out, err) = withRuby25Container { c =>
-      val code = ""
-
-      val (initCode, error) = c.init(initPayload(code))
-
-      initCode should not be (200)
-      error shouldBe a[Some[_]]
-      error.get shouldBe a[JsObject]
-      error.get.fields("error").toString should include("method checking failed")
-    }
-  }
-
   it should "return some error on action error" in {
     val (out, err) = withRuby25Container { c =>
       val code = """
@@ -405,20 +392,6 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
         (o + e).toLowerCase should include("invalid")
         (o + e).toLowerCase should include("parse")
     })
-  }
-
-  it should "support actions using non-default entry point" in {
-    val (out, err) = withRuby25Container { c =>
-      val code = """
-            | def niam(args)
-            |   { :result => "it works" }
-            | end
-            """.stripMargin
-
-      c.init(initPayload(code, main = "niam"))._1 should be(200)
-      val (runCode, runRes) = c.run(runPayload(JsObject()))
-      runRes.get.fields.get("result") shouldBe Some(JsString("it works"))
-    }
   }
 
   it should "support zipped actions using non-default entry point" in {
