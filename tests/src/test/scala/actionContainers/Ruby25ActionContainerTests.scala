@@ -40,55 +40,88 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
 
   behavior of ruby25ContainerImageName
 
-  testEcho(Seq {
-    (
-      "RUBY",
-      """
-          |def main(args)
-          |  puts 'hello stdout'
-          |  warn 'hello stderr'
-          |  args
-          |end
-          """.stripMargin)
-  })
+  override val testNoSourceOrExec = TestConfig("")
 
-  testNotReturningJson("""
+  override val testEcho = {
+    TestConfig("""
+                 |def main(args)
+                 |  puts 'hello stdout'
+                 |  warn 'hello stderr'
+                 |  args
+                 |end
+               """.stripMargin)
+  }
+
+  override val testNotReturningJson = {
+    TestConfig(
+      """
+       |def main(args)
+       |  "not a json object"
+       |end
+     """.stripMargin,
+      enforceEmptyOutputStream = enforceEmptyOutputStream,
+      enforceEmptyErrorStream = false)
+  }
+
+  override val testInitCannotBeCalledMoreThanOnce = {
+    TestConfig(
+      """
         |def main(args)
-        |  "not a json object"
+        |  args
         |end
-        """.stripMargin)
+      """.stripMargin,
+      enforceEmptyOutputStream = enforceEmptyOutputStream)
+  }
 
-  testUnicode(Seq {
-    (
-      "RUBY",
+  override val testEntryPointOtherThanMain = {
+    TestConfig(
       """
+        |def niam(args)
+        |  args
+        |end
+      """.stripMargin,
+      main = "niam",
+      enforceEmptyOutputStream = enforceEmptyOutputStream)
+  }
+
+  override val testUnicode = {
+    TestConfig("""
          |def main(args)
          |  str = args['delimiter'] + " ☃ " + args['delimiter']
          |  print str + "\n"
          |  {"winter" => str}
          |end
          """.stripMargin.trim)
-  })
+  }
 
-  testEnv(
-    Seq {
-      (
-        "RUBY",
-        """
-         |def main(args)
-         |  {
-         |       "env" => ENV,
-         |       "api_host" => ENV['__OW_API_HOST'],
-         |       "api_key" => ENV['__OW_API_KEY'],
-         |       "namespace" => ENV['__OW_NAMESPACE'],
-         |       "action_name" => ENV['__OW_ACTION_NAME'],
-         |       "activation_id" => ENV['__OW_ACTIVATION_ID'],
-         |       "deadline" => ENV['__OW_DEADLINE']
-         |  }
-         |end
-         """.stripMargin.trim)
-    },
-    enforceEmptyOutputStream)
+  override val testEnv = {
+    TestConfig(
+      """
+        |def main(args)
+        |  {
+        |       "env" => ENV,
+        |       "api_host" => ENV['__OW_API_HOST'],
+        |       "api_key" => ENV['__OW_API_KEY'],
+        |       "namespace" => ENV['__OW_NAMESPACE'],
+        |       "action_name" => ENV['__OW_ACTION_NAME'],
+        |       "activation_id" => ENV['__OW_ACTIVATION_ID'],
+        |       "deadline" => ENV['__OW_DEADLINE']
+        |  }
+        |end
+      """.stripMargin.trim,
+      enforceEmptyOutputStream = enforceEmptyOutputStream)
+  }
+
+  override val testLargeInput = {
+    TestConfig("""
+        |<?php
+        |function main(array $args) : array {
+        |    echo 'hello stdout';
+        |    error_log('hello stderr');
+        |    return $args;
+        |}
+      """.stripMargin)
+  }
 
   it should "fail to initialize with bad code" in {
     val (out, err) = withRuby25Container { c =>
