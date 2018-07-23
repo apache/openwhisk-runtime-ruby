@@ -115,8 +115,6 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
   override val testLargeInput = {
     TestConfig("""
         |def main(args)
-        |  puts 'hello stdout'
-        |  warn 'hello stderr'
         |  args
         |end
       """.stripMargin)
