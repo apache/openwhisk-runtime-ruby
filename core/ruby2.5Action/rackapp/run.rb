@@ -14,9 +14,11 @@ class RunApp
     body = Rack::Request.new(env).body.read
     data = JSON.parse(body) || {}
     env = {'BUNDLE_GEMFILE' => PROGRAM_DIR + 'Gemfile'}
-    ['api_key', 'namespace', 'action_name', 'activation_id', 'deadline'].each{|e|
-      env["__OW_#{e.upcase}"] = data[e] if data[e] && data[e].is_a?(String)
-    }
+    data.each do |key, value|
+      if key != 'value'
+        env["__OW_#{key.upcase}"] = value if value && value.is_a?(String)
+      end
+    end
 
     # Save parameter values to file in order to let runner.rb read this later
     File.write PARAM, data['value'].to_json
