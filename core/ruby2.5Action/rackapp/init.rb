@@ -35,7 +35,7 @@ class InitApp
     if binary then
       File.write TMP_ZIP, Base64.decode64(code)
       if !unzip(TMP_ZIP, PROGRAM_DIR) then
-        return ErrorResponse.new 'Invalid Binary: failed to open zip file. Please make sure you have finishied $bundle package successfully.', 500
+        return ErrorResponse.new 'Invalid Binary: failed to open zip file. Please make sure you have finished $bundle package successfully.', 500
       end
       # Try to resolve dependencies
       if File.exist?(PROGRAM_DIR + 'Gemfile') then
