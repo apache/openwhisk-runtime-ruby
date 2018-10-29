@@ -23,6 +23,8 @@ import common.WskActorSystem
 import actionContainers.{ActionContainer, BasicActionRunnerTests}
 import actionContainers.ActionContainer.withContainer
 import actionContainers.ResourceHelpers.ZipBuilder
+import actionContainers.ResourceHelpers
+import java.nio.file.FileSystems;
 import spray.json._
 
 @RunWith(classOf[JUnitRunner])
@@ -328,6 +330,22 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
       runRes.get.fields.get("result") shouldBe Some(JsString("stranger"))
     }
   }
+
+  it should "support zip-encoded packages without directory entries" in {
+    val path = FileSystems.getDefault().getPath("dat", "without_dir_entries.zip");
+    val code = ResourceHelpers.readAsBase64(path)
+
+    val (out, err) = withRuby25Container { c =>
+      c.init(initPayload(code))._1 should be(200)
+
+      val (runCode, runRes) = c.run(runPayload(JsObject()))
+
+      runCode should be(200)
+      runRes.get.fields.get("greeting") shouldBe defined
+      runRes.get.fields.get("greeting") shouldBe Some(JsString("Hello stranger!"))
+    }
+  }
+
 
   it should "fail gracefully on invalid zip files" in {
     // Some text-file encoded to base64.
