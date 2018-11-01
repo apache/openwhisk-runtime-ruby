@@ -346,7 +346,6 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
     }
   }
 
-
   it should "fail gracefully on invalid zip files" in {
     // Some text-file encoded to base64.
     val code = "Q2VjaSBuJ2VzdCBwYXMgdW4gemlwLgo="
