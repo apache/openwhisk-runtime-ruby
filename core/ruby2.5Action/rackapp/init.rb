@@ -84,7 +84,9 @@ class InitApp
     def unzip(zipfile_path, destination_folder)
       Zip::File.open(zipfile_path) do |zip|
         zip.each do |file|
-          zip.extract(file, destination_folder + file.name)
+          f_path = destination_folder + file.name
+          FileUtils.mkdir_p(File.dirname(f_path))
+          zip.extract(file, f_path)
         end
       end
       true
