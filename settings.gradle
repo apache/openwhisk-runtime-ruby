@@ -1,6 +1,7 @@
 include 'tests'
 
 include 'core:ruby2.5Action'
+include 'core:ruby2.6ActionLoop'
 
 rootProject.name = 'runtime-ruby'
 
