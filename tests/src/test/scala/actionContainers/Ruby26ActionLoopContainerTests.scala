@@ -39,7 +39,6 @@ class ActionLoopPythonBasicTests extends BasicActionRunnerTests with WskActorSys
 
   override val testNoSourceOrExec = TestConfig("")
 
- 
   override val testNotReturningJson =
     TestConfig("""
                  |def main(args):
