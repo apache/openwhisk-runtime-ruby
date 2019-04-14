@@ -18,6 +18,10 @@
 
 set -e
 
+# upgrade docker
+sudo apt update -v
+sudo apt install --only-ugrade docker-ce -y
+
 # Build script for Travis-CI.
 
 SCRIPTDIR=$(cd $(dirname "$0") && pwd)
