@@ -27,8 +27,7 @@ class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActo
 
   val image = "actionloop-ruby-v2.6"
 
-  override def withActionContainer(env: Map[String, String] = Map.empty)(
-    code: ActionContainer => Unit) = {
+  override def withActionContainer(env: Map[String, String] = Map.empty)(code: ActionContainer => Unit) = {
     withContainer(image, env)(code)
   }
 
@@ -40,22 +39,19 @@ class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActo
   override val testNoSourceOrExec = TestConfig("")
 
   override val testNotReturningJson =
-    TestConfig(
-      """|def main(args)
+    TestConfig("""|def main(args)
          |  "not a json object"
          |end
          |""".stripMargin)
 
-  override val testEcho = TestConfig(
-    """|def main(args)
+  override val testEcho = TestConfig("""|def main(args)
        |  puts 'hello stdout'
        |  warn 'hello stderr'
        |  args
        |end
        |""".stripMargin)
 
-  override val testUnicode = TestConfig(
-    """|def main(args)
+  override val testUnicode = TestConfig("""|def main(args)
        |  str = args['delimiter'] + " ☃ " + args['delimiter']
        |  print str + "\n"
        |  {"winter" => str}
@@ -73,10 +69,10 @@ class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActo
        |       "deadline" => ENV['__OW_DEADLINE']
        |  }
        |end
-       |""".stripMargin, enforceEmptyOutputStream=false)
+       |""".stripMargin,
+    enforceEmptyOutputStream = false)
 
-  override val testInitCannotBeCalledMoreThanOnce = TestConfig(
-    s"""|def main(args)
+  override val testInitCannotBeCalledMoreThanOnce = TestConfig(s"""|def main(args)
         |  args
         |end
         |""".stripMargin)
@@ -85,10 +81,10 @@ class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActo
     s"""|def niam(args)
         |  args
         |end
-        |""".stripMargin, main = "niam")
+        |""".stripMargin,
+    main = "niam")
 
-  override val testLargeInput = TestConfig(
-    s"""|def main(args)
+  override val testLargeInput = TestConfig(s"""|def main(args)
         |  args
         |end
         |""".stripMargin)
