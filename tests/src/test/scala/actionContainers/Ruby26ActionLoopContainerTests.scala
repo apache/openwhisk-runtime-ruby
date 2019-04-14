@@ -23,11 +23,12 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ActionLoopPythonBasicTests extends BasicActionRunnerTests with WskActorSystem {
+class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActorSystem {
 
   val image = "actionloop-ruby-v2.6"
 
-  override def withActionContainer(env: Map[String, String] = Map.empty)(code: ActionContainer => Unit) = {
+  override def withActionContainer(env: Map[String, String] = Map.empty)(
+    code: ActionContainer => Unit) = {
     withContainer(image, env)(code)
   }
 
@@ -39,49 +40,56 @@ class ActionLoopPythonBasicTests extends BasicActionRunnerTests with WskActorSys
   override val testNoSourceOrExec = TestConfig("")
 
   override val testNotReturningJson =
-    TestConfig("""
-                 |def main(args):
-                 |    return "not a json object"
-               """.stripMargin)
+    TestConfig(
+      """|def main(args)
+         |  "not a json object"
+         |end
+         |""".stripMargin)
 
-  override val testEcho = TestConfig("""|import sys
-       |def main(args):
-       |   print("hello stdout", file=sys.stdout)
-       |   print("hello stderr", file=sys.stderr)
-       |   return args
-    """.stripMargin)
+  override val testEcho = TestConfig(
+    """|def main(args)
+       |  puts 'hello stdout'
+       |  warn 'hello stderr'
+       |  args
+       |end
+       |""".stripMargin)
 
-  override val testUnicode = TestConfig("""|def main(args):
-       |  delimiter = args['delimiter']
-       |  msg = u"%s ☃ %s" % (delimiter, delimiter)
-       |  print(msg)
-       |  return { "winter": msg }
-    """.stripMargin)
+  override val testUnicode = TestConfig(
+    """|def main(args)
+       |  str = args['delimiter'] + " ☃ " + args['delimiter']
+       |  print str + "\n"
+       |  {"winter" => str}
+       |end
+       |""".stripMargin)
 
-  override val testEnv = TestConfig("""|import os
-       |def main(args):
-       |  env = os.environ
-       |  return {
-       |    "api_host":      env["__OW_API_HOST"],
-       |    "api_key":       env["__OW_API_KEY"],
-       |    "namespace":     env["__OW_NAMESPACE"],
-       |    "activation_id": env["__OW_ACTIVATION_ID"],
-       |    "action_name":   env["__OW_ACTION_NAME"],
-       |    "deadline":      env["__OW_DEADLINE"]
+  override val testEnv = TestConfig(
+    """|def main(args)
+       |  {
+       |       "api_host" => ENV['__OW_API_HOST'],
+       |       "api_key" => ENV['__OW_API_KEY'],
+       |       "namespace" => ENV['__OW_NAMESPACE'],
+       |       "action_name" => ENV['__OW_ACTION_NAME'],
+       |       "activation_id" => ENV['__OW_ACTIVATION_ID'],
+       |       "deadline" => ENV['__OW_DEADLINE']
        |  }
-    """.stripMargin)
+       |end
+       |""".stripMargin, enforceEmptyOutputStream=false)
 
-  override val testInitCannotBeCalledMoreThanOnce = TestConfig(s"""|def main(args):
-        |  return args
-    """.stripMargin)
+  override val testInitCannotBeCalledMoreThanOnce = TestConfig(
+    s"""|def main(args)
+        |  args
+        |end
+        |""".stripMargin)
 
   override val testEntryPointOtherThanMain = TestConfig(
-    s"""|def niam(args):
-        |   return args
-    """.stripMargin,
-    main = "niam")
+    s"""|def niam(args)
+        |  args
+        |end
+        |""".stripMargin, main = "niam")
 
-  override val testLargeInput = TestConfig(s"""|def main(args):
-        |  return args
-    """.stripMargin)
+  override val testLargeInput = TestConfig(
+    s"""|def main(args)
+        |  args
+        |end
+        |""".stripMargin)
 }
