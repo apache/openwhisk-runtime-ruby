@@ -9,6 +9,7 @@ scala:
 services:
 - docker
 before_install:
+- "cat /etc/os-release"
 - "./tools/travis/setup.sh"
 install: true
 script:
