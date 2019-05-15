@@ -14,7 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-FROM openwhisk/actionloop-v2:latest as builder
+FROM golang:1.11 as builder
+ENV PROXY_SOURCE=https://github.com/apache/incubator-openwhisk-runtime-go/archive/golang1.11@v1.13.0-incubating.tar.gz
+RUN curl -L "$PROXY_SOURCE" | tar xzf - \
+  && mkdir -p src/github.com/apache \
+  && mv incubator-openwhisk-runtime-go-golang1.11-v1.13.0-incubating \
+     src/github.com/apache/incubator-openwhisk-runtime-go \
+  && cd src/github.com/apache/incubator-openwhisk-runtime-go/main \
+  && CGO_ENABLED=0 go build -o /bin/proxy
 FROM ruby:2.6.2-alpine3.9
 RUN mkdir -p /proxy/bin /proxy/lib /proxy/action
 WORKDIR /proxy
