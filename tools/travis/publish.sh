@@ -27,11 +27,17 @@ WHISKDIR="$ROOTDIR/../openwhisk"
 export OPENWHISK_HOME=$WHISKDIR
 
 IMAGE_PREFIX=$1
-RUNTIME=$2
+RUNTIME_VERSION=$2
 IMAGE_TAG=$3
 
 if [[ ! -z ${DOCKER_USER} ]] && [[ ! -z ${DOCKER_PASSWORD} ]]; then
 docker login -u "${DOCKER_USER}" -p "${DOCKER_PASSWORD}"
+fi
+
+if [ ${RUNTIME_VERSION} == "2.5" ]; then
+  RUNTIME="ruby2.5Action"
+elif [ ${RUNTIME_VERSION} == "2.6" ]; then
+  RUNTIME="ruby2.6ActionLoop"
 fi
 
 if [[ ! -z ${RUNTIME} ]]; then
