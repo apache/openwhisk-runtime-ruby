@@ -36,7 +36,7 @@ deploy:
     all_branches: true
     repo: apache/incubator-openwhisk-runtime-ruby
 - provider: script
-  script: "./tools/travis/publish.sh openwhisk 2.5 latest && ./tools/travis/publish.sh openwhisk 2.6 latest"
+  script: "./tools/travis/publish.sh openwhisk 2.5 nightly && ./tools/travis/publish.sh openwhisk 2.6 nightly"
   on:
     branch: master
     repo: apache/incubator-openwhisk-runtime-ruby
