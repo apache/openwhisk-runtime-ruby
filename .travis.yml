@@ -34,12 +34,12 @@ deploy:
   on:
     tags: true
     all_branches: true
-    repo: apache/incubator-openwhisk-runtime-ruby
+    repo: apache/openwhisk-runtime-ruby
 - provider: script
   script: "./tools/travis/publish.sh openwhisk 2.5 nightly && ./tools/travis/publish.sh openwhisk 2.6 nightly"
   on:
     branch: master
-    repo: apache/incubator-openwhisk-runtime-ruby
+    repo: apache/openwhisk-runtime-ruby
 env:
   global:
   - secure: XzlQe3SFrxEgkGGeC5vLYp1LqrpRZwZg12zD6SGlbAqzXSOBBj4bC5aGsUc4bJHTE5FqfwZYC28H1b2dT5ixIhsm3Klkzaw0WP8FwMk0N300XuJ+TsVg0ByETFyycyHG4uvgvwhGCqm+mkCXkqacO0aC1zzAKfQPRfbfhbK0ofgYcpkjecUqPR/glk7iD5NZMbajjQP652AQYa78C0yGccBAvv1sxxq8eKokwTTKyiN1yCtyXm7q5lTQsiRkpt6WqQXeNDvJvAgTfjoc3zL+SUqLHt2eE4TFzmfRINyiKYQwxQubbvpZudS9LYY3vHNcJGNuHd+e88WgjlR9x9PajKJ+9nimZUuNSgFSX5VQVPs4Ebp12aqMm/7Zt5pISzHoHGX5VtnbgQX4Vtd64HZu/Ld6FEbHuHMJY2B8260V1Dzgc0UVYlN26vJ4RvbqhKNKzj1YnF5Hx3MH/jgWp+UFu9g2yUKFur4E0T1luUtomTgqmK5TnswOzCVlQK1dH+vcYnInNn0jaTZFib4oy7hU5C2sO/bJHE6SmVnTlysfy9N8rW7/MkuOuI2pSAVGnIb+7mK+DzBCZK8+U4JyDooH9+6419+Wifg6bAAkNyxhaDG7gPhrRfOt8I3h1cVZio3Qfphs5WGFYnTc78gUimYRUq/28WbvBNlGJAHJzk3+Q0w=
