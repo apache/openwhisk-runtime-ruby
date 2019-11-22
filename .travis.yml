@@ -22,6 +22,11 @@ language: java
 
 services:
 - docker
+# required to support multi-stage build
+addons:
+   apt:
+     packages:
+       - docker-ce
 
 before_install:
 - "cat /etc/os-release"
