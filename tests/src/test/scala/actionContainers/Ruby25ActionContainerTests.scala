@@ -106,6 +106,7 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
         |       "api_key" => ENV['__OW_API_KEY'],
         |       "namespace" => ENV['__OW_NAMESPACE'],
         |       "action_name" => ENV['__OW_ACTION_NAME'],
+        |       "action_version" => ENV['__OW_ACTION_VERSION'],
         |       "activation_id" => ENV['__OW_ACTIVATION_ID'],
         |       "deadline" => ENV['__OW_DEADLINE']
         |  }
