@@ -7,6 +7,8 @@ class SentinelHandler < MiddlewareBase
       puts response.body if response.status!=200
       puts "XXX_THE_END_OF_A_WHISK_ACTIVATION_XXX"
       warn "XXX_THE_END_OF_A_WHISK_ACTIVATION_XXX"
+      STDOUT.flush
+      STDERR.flush
     end
     response
   end
