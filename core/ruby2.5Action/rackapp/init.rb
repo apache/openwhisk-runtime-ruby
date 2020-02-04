@@ -9,6 +9,7 @@ class InitApp
     # Make sure that this action is not initialised more than once
     if File.exist? CONFIG then
       puts "Error: Cannot initialize the action more than once."
+      STDOUT.flush
       return ErrorResponse.new 'Cannot initialize the action more than once.', 403
     end
 
