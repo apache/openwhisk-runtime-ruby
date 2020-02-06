@@ -28,7 +28,7 @@ RUN curl -sL \
   && cd openwhisk-runtime-go-*/main\
   && GO111MODULE=on go build -o /bin/proxy
 
-FROM ruby:2.6.2-alpine3.9
+FROM ruby:2.6
 
 # select the builder to use
 ARG GO_PROXY_BUILD_FROM=release
@@ -40,6 +40,5 @@ COPY --from=builder_release /bin/proxy /bin/proxy_release
 RUN mv /bin/proxy_${GO_PROXY_BUILD_FROM} /bin/proxy
 ADD lib/launcher.rb /proxy/lib/launcher.rb
 ADD bin/compile /proxy/bin/compile
-RUN apk update && apk add python3
 ENV OW_COMPILER=/proxy/bin/compile
 ENTRYPOINT ["/bin/proxy"]

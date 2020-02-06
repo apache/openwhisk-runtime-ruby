@@ -20,7 +20,7 @@ FROM ruby:2.5
 RUN gem install \
         bundler \
         rubyzip \
-        rack \
+        rack:'~>2.0.0' \
         puma \
         rake          `#optional` \
         mechanize     `#optional` \
