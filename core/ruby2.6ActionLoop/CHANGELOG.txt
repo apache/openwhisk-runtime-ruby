@@ -17,14 +17,7 @@
 #
 -->
 
-# Ruby 2.5 OpenWhisk Runtime Container
+# Ruby 2.6 OpenWhisk Runtime Container
 
 ## 1.14.0
-  - Support for __OW_ACTION_VERSION (openwhisk/4761)
-
-## 1.13.0-incubating
-  - Support zip files without dir entries (#15)
-
-## 1.0.0
-Changes:
-- Initial release
+  - Initial Release
