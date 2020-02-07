@@ -333,7 +333,7 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
   }
 
   it should "support zip-encoded packages without directory entries" in {
-    val path = FileSystems.getDefault().getPath("dat", "without_dir_entries.zip");
+    val path = FileSystems.getDefault().getPath("src", "test", "resources", "without_dir_entries.zip");
     val code = ResourceHelpers.readAsBase64(path)
 
     val (out, err) = withRuby25Container { c =>
