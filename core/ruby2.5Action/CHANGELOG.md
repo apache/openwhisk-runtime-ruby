@@ -20,7 +20,7 @@
 # Ruby 2.5 OpenWhisk Runtime Container
 
 ## 1.15.0
-  - build proxy using golang 1.15 and openwhisk-runtime-go 1.16.0 (#48)
+  - Build proxy using golang 1.15 and openwhisk-runtime-go 1.16.0 (#48)
 
 ## 1.14.0
   - Support for __OW_ACTION_VERSION (openwhisk/4761)
