@@ -27,8 +27,16 @@ RUN gem install \
         activesupport `#optional` \
         jwt           `#optional`
 
-# create src directory to store action files
-RUN mkdir -p /action/src
+
+RUN \
+    apt-get -y update \
+    # Upgrade installed packages to get latest security fixes if the base image does not contain them already.
+    && apt-get upgrade -y --no-install-recommends \
+    # Cleanup apt data, we do not need them later on.
+    && rm -rf /var/lib/apt/lists/* \
+    # create src directory to store action files
+    && mkdir -p /action/src
+
 ADD rackapp /action/rackapp/
 COPY config.ru /action
 
