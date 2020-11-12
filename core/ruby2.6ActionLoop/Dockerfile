@@ -33,7 +33,15 @@ FROM ruby:2.6
 # select the builder to use
 ARG GO_PROXY_BUILD_FROM=release
 
-RUN mkdir -p /proxy/bin /proxy/lib /proxy/action
+RUN \
+    apt-get -y update \
+    # Upgrade installed packages to get latest security fixes if the base image does not contain them already.
+    && apt-get upgrade -y --no-install-recommends \
+    # Cleanup apt data, we do not need them later on.
+    && rm -rf /var/lib/apt/lists/* \
+    # Create required directories
+    && mkdir -p /proxy/bin /proxy/lib /proxy/action
+
 WORKDIR /proxy
 COPY --from=builder_source /bin/proxy /bin/proxy_source
 COPY --from=builder_release /bin/proxy /bin/proxy_release

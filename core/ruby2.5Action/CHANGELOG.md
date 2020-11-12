@@ -19,6 +19,9 @@
 
 # Ruby 2.5 OpenWhisk Runtime Container
 
+## Next Release
+  - Install latest security fixes with every image build.
+
 ## 1.15.0
   - Build proxy using golang 1.15 and openwhisk-runtime-go 1.16.0 (#48)
 
