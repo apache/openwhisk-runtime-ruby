@@ -30,7 +30,7 @@ wsk action update myAction my_action.rb --docker openwhisk/action-ruby-v2.5
 ```
 This works on any deployment of Apache OpenWhisk
 
-### To use on deployment that contains the rutime as a kind
+### To use on deployment that contains the runtime as a kind
 To use as a kind action
 ```
 wsk action update myAction my_action.rb --kind ruby:2.5
@@ -49,7 +49,7 @@ docker login
 ```
 
 Deploy OpenWhisk using ansible environment that contains the kind `ruby:2.5`
-Assuming you have OpenWhisk already deploy localy and `OPENWHISK_HOME` pointing to root directory of OpenWhisk core repository.
+Assuming you have OpenWhisk already deploy locally and `OPENWHISK_HOME` pointing to root directory of OpenWhisk core repository.
 
 Set `ROOTDIR` to the root directory of this repository.
 
