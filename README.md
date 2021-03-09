@@ -75,7 +75,7 @@ To use as docker action push to your own dockerhub account
 docker tag whisk/ruby2.5Action $user_prefix/action-ruby-v2.5
 docker push $user_prefix/action-ruby-v2.5
 ```
-Then create the action using your image from dockerhub
+Then create the action using your image from Docker Hub.
 ```
 wsk action update myAction my_action.rb --docker $user_prefix/action-ruby-v2.5
 ```
