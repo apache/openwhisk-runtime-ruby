@@ -97,4 +97,4 @@ Using gradle to run some tests
 ```
 Using IntelliJ:
 - Import project as gradle project.
-- Make sure the working directory is root of the project/repo
+- Make sure the working directory is root of the project/repo.
