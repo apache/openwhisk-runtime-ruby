@@ -34,7 +34,7 @@ rackapp = Rack::Builder.app do
     run InitApp.new
   end
 
-  map "/run" do
+  map '/run' do
     run RunApp.new
   end
 end

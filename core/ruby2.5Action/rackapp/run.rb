@@ -23,31 +23,27 @@ class RunApp
   include Filepath
 
   def call(env)
-    if !File.exist? ENTRYPOINT then
-      return ErrorResponse.new 'Invalid Action: no action file found', 500
-    end
+    return ErrorResponse.new 'Invalid Action: no action file found', 500 unless File.exist? ENTRYPOINT
 
     # Set environment variables
     body = Rack::Request.new(env).body.read
     data = JSON.parse(body) || {}
-    env = {'BUNDLE_GEMFILE' => PROGRAM_DIR + 'Gemfile'}
+    env = { 'BUNDLE_GEMFILE' => "#{PROGRAM_DIR}Gemfile" }
     data.each do |key, value|
-      if key != 'value'
-        env["__OW_#{key.upcase}"] = value if value && value.is_a?(String)
-      end
+      env["__OW_#{key.upcase}"] = value if key != ('value') && value.is_a?(String)
     end
 
     # Save parameter values to file in order to let runner.rb read this later
     File.write PARAM, data['value'].to_json
 
     # Execute the action with given parameters
-    if system(env, "bundle exec ruby -r #{ENTRYPOINT} #{RACKAPP_DIR}runner.rb | tee #{OUT}") then
-      if File.exist? RESULT then
+    if system(env, "bundle exec ruby -r #{ENTRYPOINT} #{RACKAPP_DIR}runner.rb | tee #{OUT}")
+      if File.exist? RESULT
         result = File.read(RESULT)
-        if valid_json?(result) then
+        if valid_json?(result)
           SuccessResponse.new(JSON.parse(result))
         else
-          warn "Result must be an array but has type '#{result.class.to_s}': #{result}"
+          warn "Result must be an array but has type '#{result.class}': #{result}"
           ErrorResponse.new 'The action did not return a dictionary.', 502
         end
       else
@@ -59,9 +55,10 @@ class RunApp
   end
 
   private
-    def valid_json?(json)
-      JSON.parse(json).class == Hash
-    rescue
-      false
-    end
+
+  def valid_json?(json)
+    JSON.parse(json).instance_of?(Hash)
+  rescue StandardError
+    false
+  end
 end
