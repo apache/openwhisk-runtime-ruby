@@ -19,15 +19,15 @@ github:
   description: "Apache OpenWhisk Runtime Ruby supports Apache OpenWhisk functions written in Ruby"
   homepage: https://openwhisk.apache.org/
   labels:
-  - openwhisk
-  - apache
-  - serverless
-  - faas
-  - functions-as-a-service
-  - cloud
-  - serverless-architectures
-  - serverless-functions
-  - docker
-  - functions
-  - openwhisk-runtime
-  - ruby
+    - openwhisk
+    - apache
+    - serverless
+    - faas
+    - functions-as-a-service
+    - cloud
+    - serverless-architectures
+    - serverless-functions
+    - docker
+    - functions
+    - openwhisk-runtime
+    - ruby

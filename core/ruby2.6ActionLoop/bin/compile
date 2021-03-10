@@ -39,7 +39,7 @@ def copy_replace(src, dst, match=None, replacement=""):
         write_file(dst, body)
 
 # assemble sources
-def sources(launcher, main, src_dir):  
+def sources(launcher, main, src_dir):
     # move exec in the right place if exists
     src_file = "%s/exec" % src_dir
     if exists(src_file):

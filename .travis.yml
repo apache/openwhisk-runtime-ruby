@@ -21,35 +21,35 @@ jdk: openjdk8
 language: java
 
 services:
-- docker
+  - docker
 # required to support multi-stage build
 addons:
-   apt:
-     packages:
-       - docker-ce
+  apt:
+    packages:
+      - docker-ce
 
 before_install:
-- "cat /etc/os-release"
-- "./tools/travis/setup.sh"
+  - "cat /etc/os-release"
+  - "./tools/travis/setup.sh"
 install: true
 script:
-- "./tools/travis/build.sh && ./tools/travis/test.sh"
+  - "./tools/travis/build.sh && ./tools/travis/test.sh"
 deploy:
-- provider: script
-  script: "./tools/travis/publish.sh openwhisk ${TRAVIS_TAG%@*} ${TRAVIS_TAG##*@}"
-  on:
-    tags: true
-    all_branches: true
-    repo: apache/openwhisk-runtime-ruby
-- provider: script
-  script: "./tools/travis/publish.sh openwhisk 2.5 nightly && ./tools/travis/publish.sh openwhisk 2.6 nightly"
-  on:
-    branch: master
-    repo: apache/openwhisk-runtime-ruby
+  - provider: script
+    script: "./tools/travis/publish.sh openwhisk ${TRAVIS_TAG%@*} ${TRAVIS_TAG##*@}"
+    on:
+      tags: true
+      all_branches: true
+      repo: apache/openwhisk-runtime-ruby
+  - provider: script
+    script: "./tools/travis/publish.sh openwhisk 2.5 nightly && ./tools/travis/publish.sh openwhisk 2.6 nightly"
+    on:
+      branch: master
+      repo: apache/openwhisk-runtime-ruby
 env:
   global:
-  - secure: XzlQe3SFrxEgkGGeC5vLYp1LqrpRZwZg12zD6SGlbAqzXSOBBj4bC5aGsUc4bJHTE5FqfwZYC28H1b2dT5ixIhsm3Klkzaw0WP8FwMk0N300XuJ+TsVg0ByETFyycyHG4uvgvwhGCqm+mkCXkqacO0aC1zzAKfQPRfbfhbK0ofgYcpkjecUqPR/glk7iD5NZMbajjQP652AQYa78C0yGccBAvv1sxxq8eKokwTTKyiN1yCtyXm7q5lTQsiRkpt6WqQXeNDvJvAgTfjoc3zL+SUqLHt2eE4TFzmfRINyiKYQwxQubbvpZudS9LYY3vHNcJGNuHd+e88WgjlR9x9PajKJ+9nimZUuNSgFSX5VQVPs4Ebp12aqMm/7Zt5pISzHoHGX5VtnbgQX4Vtd64HZu/Ld6FEbHuHMJY2B8260V1Dzgc0UVYlN26vJ4RvbqhKNKzj1YnF5Hx3MH/jgWp+UFu9g2yUKFur4E0T1luUtomTgqmK5TnswOzCVlQK1dH+vcYnInNn0jaTZFib4oy7hU5C2sO/bJHE6SmVnTlysfy9N8rW7/MkuOuI2pSAVGnIb+7mK+DzBCZK8+U4JyDooH9+6419+Wifg6bAAkNyxhaDG7gPhrRfOt8I3h1cVZio3Qfphs5WGFYnTc78gUimYRUq/28WbvBNlGJAHJzk3+Q0w=
-  - secure: T2PaP00gipVQlwvOaGUL0fr76N9+BGjtUMG6QcEJ+9xfnwcGxFAfLpqctqOFVVOEUSKOtKwpa9FLenXGNtKYX9+1soaevzRgZTvYeI2exal0fkLZH9D/uZEetTDemphpNDvK2iLp/ct3Hya5n6OalyEPJV6Vz1rfKGrNKXMiLO3Nc+4iV+Z1oLO2TJ1o1qOV/BnO+xCn14pm6+SKIX/tjqNd66yQLswWfB4rgLD+G+/+iB9VX66pRHpkmwdS+5FZgJ6jNBFSyE6y857nOEMiKqfrZkUoosSsf6WBHWUkJlnc1jPkwNwHhLF3tkmPZiE7jhSHV1vuw/LTe+GqDISb4rUsqF9pUuKV9q04U7eyiM7+AJfKoMbNCK5izxsMFXpzkZ08Ep4QsVgTZECmF5Blfe8MMzDHotfarP4D4CEkTmAd2wyIwmVeswt+Jyg9oOaEZL0GnCcmm5XrD+u66w/RI0+f79+5UR3zF+Fd7Wa6PT/s3/PLV+2ZFhXJpeuJ9Hiw3VTUxp3kpBXXQukTPejfF7+mE0bUZMyNEpnFUcShNX8HvrV4HiWED8MSub4PMx5w9yj9sST0p7XzbOdBa2NliI7nQI35ErVLgqY4c/qkWOSxNUYcEbgVom0v5uEnS5OPoDlMdvQgsKjjmPEd+wsLuTXx8ThvNv7bXbRAwXiy0Jk=
+    - secure: XzlQe3SFrxEgkGGeC5vLYp1LqrpRZwZg12zD6SGlbAqzXSOBBj4bC5aGsUc4bJHTE5FqfwZYC28H1b2dT5ixIhsm3Klkzaw0WP8FwMk0N300XuJ+TsVg0ByETFyycyHG4uvgvwhGCqm+mkCXkqacO0aC1zzAKfQPRfbfhbK0ofgYcpkjecUqPR/glk7iD5NZMbajjQP652AQYa78C0yGccBAvv1sxxq8eKokwTTKyiN1yCtyXm7q5lTQsiRkpt6WqQXeNDvJvAgTfjoc3zL+SUqLHt2eE4TFzmfRINyiKYQwxQubbvpZudS9LYY3vHNcJGNuHd+e88WgjlR9x9PajKJ+9nimZUuNSgFSX5VQVPs4Ebp12aqMm/7Zt5pISzHoHGX5VtnbgQX4Vtd64HZu/Ld6FEbHuHMJY2B8260V1Dzgc0UVYlN26vJ4RvbqhKNKzj1YnF5Hx3MH/jgWp+UFu9g2yUKFur4E0T1luUtomTgqmK5TnswOzCVlQK1dH+vcYnInNn0jaTZFib4oy7hU5C2sO/bJHE6SmVnTlysfy9N8rW7/MkuOuI2pSAVGnIb+7mK+DzBCZK8+U4JyDooH9+6419+Wifg6bAAkNyxhaDG7gPhrRfOt8I3h1cVZio3Qfphs5WGFYnTc78gUimYRUq/28WbvBNlGJAHJzk3+Q0w=
+    - secure: T2PaP00gipVQlwvOaGUL0fr76N9+BGjtUMG6QcEJ+9xfnwcGxFAfLpqctqOFVVOEUSKOtKwpa9FLenXGNtKYX9+1soaevzRgZTvYeI2exal0fkLZH9D/uZEetTDemphpNDvK2iLp/ct3Hya5n6OalyEPJV6Vz1rfKGrNKXMiLO3Nc+4iV+Z1oLO2TJ1o1qOV/BnO+xCn14pm6+SKIX/tjqNd66yQLswWfB4rgLD+G+/+iB9VX66pRHpkmwdS+5FZgJ6jNBFSyE6y857nOEMiKqfrZkUoosSsf6WBHWUkJlnc1jPkwNwHhLF3tkmPZiE7jhSHV1vuw/LTe+GqDISb4rUsqF9pUuKV9q04U7eyiM7+AJfKoMbNCK5izxsMFXpzkZ08Ep4QsVgTZECmF5Blfe8MMzDHotfarP4D4CEkTmAd2wyIwmVeswt+Jyg9oOaEZL0GnCcmm5XrD+u66w/RI0+f79+5UR3zF+Fd7Wa6PT/s3/PLV+2ZFhXJpeuJ9Hiw3VTUxp3kpBXXQukTPejfF7+mE0bUZMyNEpnFUcShNX8HvrV4HiWED8MSub4PMx5w9yj9sST0p7XzbOdBa2NliI7nQI35ErVLgqY4c/qkWOSxNUYcEbgVom0v5uEnS5OPoDlMdvQgsKjjmPEd+wsLuTXx8ThvNv7bXbRAwXiy0Jk=
 notifications:
   slack:
     secure: FKVfXr+/qe6D7Kg78HkendF7dU6I0XBVQh6oDlZlKfovdKCp2LNypOGJulvypTtdhy9/LbTxNgh6qvi0e3UMHiIxC4QsJFGIcSGakn0mCr/EIusbl1dJKUsuaiL57zHMeg0Bw5gCqZwfQszhNC1A1/Vm5Vf8hK6nxRGfBVW//2udpu1PUd/6dmHVx6ZGepY8EpVsuBJxdljUTEQGquo2hnLSMF9JDzT8dzjoczvI0K6oQuWPjA8ZDn6ghpHzERoq0bq24Z2Z8nE+BlDAwwgxxr0FaHeZ59ZawJ7FVxoGZicXjSkLKhO+TEuvdvZ2XRZl0yge0Lvqr6Fha3Oogw6AWkfdAxUtGJ7VVdKs0nSqEFCk7yPUV+V8BlFG6v5l56b5BcdFFQ1b5+3LXJqerSecCJH/3BOp+PwRfveLF8QeTeVn5834rcgTSJdc3b28zb13vrDY0ZdWLy7R5KOZFufGuImkmfJVbEbkLvt5wcAmvJbJS5HIxgUH+Djf23NgC1k12jkVVGFKrcUVE1it0be0uR+y50LqSU9oAGvik+BJRlrIbeETtJaJM73bs/i7b32cP2Of2CIJCxfLDjML8/xjqmjlpVwUaqWUfwtms0ubRqNyhvRoWPF6vz6QnHHJ4l8w3tuYR+WudMwRmfVltljRnyAmrQBSmGY/kvFqxAMPTeg=
@@ -60,4 +60,3 @@ notifications:
     urls:
       # travis2slack webhook to enable DMs on openwhisk-team.slack.com to PR authors with TravisCI results
       secure: "Q7RlUa8teJUFz0zTugGUanSNqhLYOq3mnh0a6LSslDflkKNAfdd7FFcYJdHOl/iV0Dk+Y14aPgDpidZ/jt3vwlaSkFjiJMMqdLC4oDt+DEzrBT+RLyIFQo9n/i+7T+n6Ah3+Qix1l2h5O1gM0N2mek/76ih2kjz6apGSkL3/Ketr/39wFx6R4bl9AfDZjZqweFhsK4oleZXD9Mj40qWNf/BfCmUeqBXupZBxtW/RqIGSwtjjnH3vskF85z8KLuLrDgCgQ0K6h8yml9kiVdX5dMvOt290k7y17E+oKVFdpTfrUBNkfo1hCxVMEbHIiLT7yhqmlY08GfkPm3QqPeAITbFSTJmkWGpHHbXXuXgzolud+Twe2gbloWXyz/EC+UmFRRZhblHCDeui7fH7cTXrNr/ICvh4b87V/J9aHOVcftYsfRdO97zTwduy27RFLNL05B6WzmJaqzzDR2L0SssGvRx8PkPk8JS64kpHGWV4qb7dYUUTgbvI6cs4Y+YGaZqe9MihzG7+ecHNY1VxTqICTGuPfuRe+AopDv/74DkLa/kGqsJHWhK0xAm5k+XtyxYUqKfYqcNqmd3wQvfGopV8xwD4XsCtacDuuFzcPGdiybjZpG5BldRk4yU0kQe5QH4SbWWelDQ0W5KunLq3giIhf53ACvy0Kgm5V2Y+/pUC8HI="
-
