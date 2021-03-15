@@ -70,7 +70,7 @@ ln -s ${ROOTDIR}/ansible/environments/local ${OPENWHISK_HOME}/ansible/environmen
 wskdev fresh -t local-ruby
 ```
 
-To use as docker action push to your own dockerhub account
+To use as docker action push to your own Docker Hub account
 ```
 docker tag whisk/ruby2.5Action $user_prefix/action-ruby-v2.5
 docker push $user_prefix/action-ruby-v2.5
@@ -79,7 +79,7 @@ Then create the action using your image from Docker Hub.
 ```
 wsk action update myAction my_action.rb --docker $user_prefix/action-ruby-v2.5
 ```
-The `$user_prefix` is usually your dockerhub user id.
+The `$user_prefix` is usually your Docker Hub user id.
 
 ### Testing
 Install dependencies from the root directory on $OPENWHISK_HOME repository
