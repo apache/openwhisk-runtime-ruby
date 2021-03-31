@@ -19,7 +19,8 @@
 
 # Ruby 2.5 OpenWhisk Runtime Container
 
-## Next Release
+## 1.16.0
+  - Use 1.17.0 release of openwhisk-runtime-go (#52)
   - Install the latest security fixes with every image build.
 
 ## 1.15.0
