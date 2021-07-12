@@ -14,28 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require "logger"
-require "json"
+require 'logger'
+require 'json'
 
 # requiring user's action code
-require "./main__"
+require './main__'
 
 # open our file descriptor, this allows us to talk to the go-proxy parent process
 # code gets executed via file descriptor #3
-#out = File.for_fd(3)
+# out = File.for_fd(3)
 out = IO.new(3)
 
 # run this until process gets killed
-while true
+loop do
   # JSON arguments get passed via STDIN
-  line = STDIN.gets()
+  line = $stdin.gets
   break unless line
 
   # parse JSON arguments that come in via the value parameter
   args = JSON.parse(line)
   payload = {}
   args.each do |key, value|
-    if key == "value"
+    if key == 'value'
       payload = value
     else
       # set environment variables for other keys
@@ -48,11 +48,11 @@ while true
     res = main(payload)
   rescue Exception => e
     puts "exception: #{e}"
-    res ["error"] = "#{e}"
+    res ['error'] = e.to_s
   end
 
-  STDOUT.flush()
-  STDERR.flush()
+  $stdout.flush
+  $stderr.flush
   out.puts(res.to_json)
-  out.flush()
+  out.flush
 end

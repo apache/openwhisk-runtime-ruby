@@ -19,7 +19,7 @@ require "#{__dir__}/base.rb"
 
 class HTTPPostMethodValidation < MiddlewareBase
   def call(env)
-    if Rack::Request.new(env).request_method == 'POST' then
+    if Rack::Request.new(env).request_method == 'POST'
       @app.call(env)
     else
       Rack::Response.new 'Something went wrong with the request', 500
