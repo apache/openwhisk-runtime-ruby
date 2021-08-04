@@ -19,6 +19,10 @@
 
 # Ruby 2.5 OpenWhisk Runtime Container
 
+## 1.17.0
+  - Build actionloop from 1.16@1.18.0 (#63)
+  - Resolve akka versions explicitly. (#62, #61)
+
 ## 1.16.0
   - Use 1.17.0 release of openwhisk-runtime-go (#52)
   - Install the latest security fixes with every image build.
