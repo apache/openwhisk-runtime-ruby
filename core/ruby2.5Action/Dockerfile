@@ -17,6 +17,7 @@
 FROM ruby:2.5
 
 # install dependencies
+RUN gem update --system 3.2.3
 RUN gem install \
         bundler \
         rubyzip \
@@ -24,7 +25,7 @@ RUN gem install \
         puma \
         rake          `#optional` \
         mechanize     `#optional` \
-        activesupport `#optional` \
+        activesupport:'~>6.1.4.4' \
         jwt           `#optional`
 
 
