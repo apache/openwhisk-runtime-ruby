@@ -33,6 +33,7 @@ RUN \
     apt-get -y update \
     # Upgrade installed packages to get latest security fixes if the base image does not contain them already.
     && apt-get upgrade -y --no-install-recommends \
+    && apt-get install -y zip \
     # Cleanup apt data, we do not need them later on.
     && rm -rf /var/lib/apt/lists/* \
     # create src directory to store action files
