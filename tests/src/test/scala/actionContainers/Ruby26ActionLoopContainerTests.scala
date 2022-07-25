@@ -21,6 +21,7 @@ import actionContainers.{ActionContainer, BasicActionRunnerTests}
 import common.WskActorSystem
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import spray.json.{JsArray, JsObject, JsString}
 
 @RunWith(classOf[JUnitRunner])
 class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActorSystem {
@@ -89,4 +90,23 @@ class Ruby26ActionLoopContainerTests extends BasicActionRunnerTests with WskActo
         |  args
         |end
         |""".stripMargin)
+
+  it should "support array result" in {
+    val (out, err) = withActionLoopContainer { c =>
+      val code = """
+                   | def main(args)
+                   |   nums = Array["a","b"]
+                   |   nums
+                   | end
+                 """.stripMargin
+
+      val (initCode, _) = c.init(initPayload(code))
+
+      initCode should be(200)
+
+      val (runCode, runRes) = c.runForJsArray(JsObject())
+      runCode should be(200)
+      runRes shouldBe Some(JsArray(JsString("a"), JsString("b")))
+    }
+  }
 }
