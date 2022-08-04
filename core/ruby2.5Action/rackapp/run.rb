@@ -48,7 +48,7 @@ class RunApp
           SuccessResponse.new(JSON.parse(result))
         else
           warn "Result must be an array but has type '#{result.class.to_s}': #{result}"
-          ErrorResponse.new 'The action did not return a dictionary.', 502
+          ErrorResponse.new 'The action did not return a dictionary or array.', 502
         end
       else
         ErrorResponse.new 'Invalid Action: An error occurred running the action', 502
