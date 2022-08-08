@@ -426,7 +426,7 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
     }
   }
 
-  it should "support array result" in {
+  it should "support return array result" in {
     val (out, err) = withRuby25Container { c =>
       val code = """
                    | def main(args)
@@ -440,6 +440,24 @@ class Ruby25ActionContainerTests extends BasicActionRunnerTests with WskActorSys
       initCode should be(200)
 
       val (runCode, runRes) = c.runForJsArray(runPayload(JsObject()))
+      runCode should be(200)
+      runRes shouldBe Some(JsArray(JsString("a"), JsString("b")))
+    }
+  }
+
+  it should "support array as input param" in {
+    val (out, err) = withRuby25Container { c =>
+      val code = """
+                   | def main(args)
+                   |   args
+                   | end
+                 """.stripMargin
+
+      val (initCode, _) = c.init(initPayload(code))
+
+      initCode should be(200)
+
+      val (runCode, runRes) = c.runForJsArray(runPayload(JsArray(JsString("a"), JsString("b"))))
       runCode should be(200)
       runRes shouldBe Some(JsArray(JsString("a"), JsString("b")))
     }
