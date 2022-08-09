@@ -24,6 +24,38 @@
 [![Twitter](https://img.shields.io/twitter/follow/openwhisk.svg?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=openwhisk)
 
 ### Give it a try today
+A very simple `hello world` function would be:
+
+```ruby
+def main(args)
+  name = args["name"] || "stranger"
+  greeting = "Hello #{name}!"
+  puts greeting
+  { "greeting" => greeting }
+end
+```
+
+For the return result, not only support `dictionary` but also support `array`
+
+So a very simple `hello array` function would be:
+
+```ruby
+def main(args)
+  nums = Array["a","b"]
+  nums
+end
+```
+
+And support array result for sequence action as well, the first action's array result can be used as next action's input parameter.
+
+So the function can be
+
+```ruby
+def main(args)
+  args
+end
+```
+
 To use as a docker action
 ```
 wsk action update myAction my_action.rb --docker openwhisk/action-ruby-v2.5
