@@ -44,7 +44,7 @@ class RunApp
     if system(env, "bundle exec ruby -r #{ENTRYPOINT} #{RACKAPP_DIR}runner.rb | tee #{OUT}") then
       if File.exist? RESULT then
         result = File.read(RESULT)
-        if valid_json?(result) then
+        if valid_json_or_array(result) then
           SuccessResponse.new(JSON.parse(result))
         else
           warn "Result must be an array but has type '#{result.class.to_s}': #{result}"
@@ -59,8 +59,8 @@ class RunApp
   end
 
   private
-    def valid_json?(json)
-      JSON.parse(json).class == Hash
+    def valid_json_or_array(json)
+      JSON.parse(json).class == Hash or JSON.parse(json).class == Array
     rescue
       false
     end
