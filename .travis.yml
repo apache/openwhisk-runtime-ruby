@@ -16,8 +16,8 @@
 #
 
 sudo: required
-dist: xenial
-jdk: openjdk8
+dist: focal
+jdk: openjdk11
 language: java
 
 services:
@@ -25,8 +25,10 @@ services:
 # required to support multi-stage build
 addons:
   apt:
+    sources:
+     - sourcelist: 'deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable'
     packages:
-      - docker-ce
+     - docker-ce
 
 before_install:
   - "cat /etc/os-release"
