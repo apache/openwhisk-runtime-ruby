@@ -35,7 +35,7 @@ include 'core:ruby2.6ActionLoop'
 rootProject.name = 'runtime-ruby'
 
 gradle.ext.openwhisk = [
-        version: '1.0.0-SNAPSHOT'
+        version: '1.0.1-SNAPSHOT'
 ]
 
 gradle.ext.scala = [
